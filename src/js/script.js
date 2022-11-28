@@ -1,5 +1,4 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
-
 {
   'use strict';
 
@@ -53,17 +52,53 @@
   };
 
   class Product {
-    constructor() {
+    constructor(id, data) {
       const thisProduct = this;
 
+      thisProduct.id = id;
+      thisProduct.data = data;
+
+      thisProduct.renderInMenu();
+
       console.log('new Product:', thisProduct);
+    }
+    renderInMenu() {
+      const thisProduct = this;
+
+      // generate HTML Based on template
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+      console.log('generatedHTML:', generatedHTML);
+
+      // create element using untils.createElementFromHTML
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+
+      // find menu cointainer
+      const menuContainer = document.querySelector(select.containerOf.menu);
+
+      // add element to menu
+      menuContainer.appendChild(thisProduct.element);
+
+
     }
   }
 
   const app = {
     initMenu: function () {
+      const thisApp = this;
+      console.log('thisAppData:', thisApp.data);
+
+      for (let productData in thisApp.data.products) {
+        new Product(productData, thisApp.data.products[productData]);
+      }
+
       const testProduct = new Product();
       console.log('testProduct:', testProduct);
+    },
+
+    initData: function () {
+      const thisApp = this;
+
+      thisApp.data = dataSource;
     },
 
 
@@ -75,6 +110,7 @@
       console.log('settings:', settings);
       console.log('templates:', templates);
 
+      thisApp.initData();
       thisApp.initMenu();
     },
   };

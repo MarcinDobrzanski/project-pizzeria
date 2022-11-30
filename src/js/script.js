@@ -62,6 +62,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
 
@@ -95,6 +96,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion() {
@@ -112,7 +114,7 @@
 
         /* find active product (product that has active class) */
         const activeProduct = document.querySelector(select.all.menuProductsActive);
-        console.log('activeProduct', activeProduct);
+        // console.log('activeProduct', activeProduct);
 
         /* if there is active product and it's not thisProduct.element, remove class active from it */
         if (activeProduct !== null && activeProduct != thisProduct.element) {
@@ -128,7 +130,7 @@
 
     initOrderForm() {
       const thisProduct = this;
-      console.log('initOrderForm', thisProduct);
+      // console.log('initOrderForm', thisProduct);
 
       thisProduct.form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -150,11 +152,11 @@
 
     processOrder() {
       const thisProduct = this;
-      console.log('processOrder', thisProduct);
+      // console.log('processOrder', thisProduct);
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      // console.log('formData', formData);
 
       // set price to default price
       let price = thisProduct.data.price;
@@ -163,18 +165,18 @@
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        console.log('paramId', paramId, param);
+        // console.log('paramId', paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log('optionId', optionId, option);
+          // console.log('optionId', optionId, option);
 
           //whether the formData object contains a property with the same key as the parameter key, and
           //whether there is an option key in the array stored under this key (the (includes) method mentioned earlier).
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          console.log('optionSelected', optionSelected);
+          // console.log('optionSelected', optionSelected);
 
           if (optionSelected) {
 
@@ -192,7 +194,7 @@
           }
 
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-          console.log('optionImage', optionImage);
+          // console.log('optionImage', optionImage);
 
           if (optionImage) {
             if (optionSelected) {
@@ -210,6 +212,21 @@
       thisProduct.priceElem.innerHTML = price;
     }
 
+    initAmountWidget() {
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    }
+
+  }
+
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+
+      console.log('amountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+    }
   }
 
   const app = {

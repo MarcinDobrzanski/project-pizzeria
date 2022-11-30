@@ -73,7 +73,7 @@
 
       // generate HTML Based on template
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      console.log('generatedHTML:', generatedHTML);
+      // console.log('generatedHTML:', generatedHTML);
 
       // create element using untils.createElementFromHTML
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -94,6 +94,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -172,7 +173,10 @@
 
           //whether the formData object contains a property with the same key as the parameter key, and
           //whether there is an option key in the array stored under this key (the (includes) method mentioned earlier).
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          console.log('optionSelected', optionSelected);
+
+          if (optionSelected) {
 
             // check if the option is not default
             if (!option.default) {
@@ -186,6 +190,19 @@
               price -= option.price;
             }
           }
+
+          const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+          console.log('optionImage', optionImage);
+
+          if (optionImage) {
+            if (optionSelected) {
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
+            }
+            else {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
+          }
+
         }
       }
 

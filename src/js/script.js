@@ -42,8 +42,8 @@
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 1,
-      defaultMax: 9,
+      defaultMin: 0,
+      defaultMax: 10,
     }
   };
 
@@ -257,13 +257,17 @@
       //TODO: Add validation
 
       // thisWidget.value = newValue;
-      if (thisWidget.value !== newValue && !isNaN(newValue)) {
-        if (newValue >= settings.amountWidget.defaultMin - 1) {
-          if (newValue <= settings.amountWidget.defaultMax + 1) {
-            thisWidget.value = newValue;
-            thisWidget.announce();
-          }
-        }
+      // if (thisWidget.value !== newValue && !isNaN(newValue)) {
+      //   if (newValue >= settings.amountWidget.defaultMin - 1) {
+      //     if (newValue <= settings.amountWidget.defaultMax + 1) {
+      //       thisWidget.value = newValue;
+      //       thisWidget.announce();
+      //     }
+      //   }
+      // }
+      if (thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
       }
       thisWidget.input.value = thisWidget.value;
     }

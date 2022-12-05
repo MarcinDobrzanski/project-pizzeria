@@ -363,9 +363,8 @@
         const activeCart = document.querySelector(select.containerOf.cart);
         console.log(activeCart);
 
-        if (activeCart !== null) {
-          activeCart.classList.toggle(classNames.cart.wrapperActive);
-        }
+        activeCart.classList.toggle(classNames.cart.wrapperActive);
+
       });
     }
   }

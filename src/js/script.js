@@ -266,8 +266,8 @@
     addToCart() {
       const thisProduct = this;
 
-      // app.cart.add(thisProduct);
-      thisProduct.prepareCartProduct();
+      // thisProduct.prepareCartProduct();
+      app.cart.add(thisProduct.prepareCartProduct());
     }
 
     prepareCartProduct() {
@@ -315,7 +315,7 @@
           // console.log('optionSelected', optionSelected);
 
           if (optionSelected) {
-            params[paramId].options = option;
+            params[paramId].options[optionId] = option.label;
           }
 
         }
@@ -437,20 +437,14 @@
     add(menuProduct) {
       const thisCart = this;
 
-      const generatedHTML = templates.cartProduct(thisCart.);
-      console.log('cart generatedHTML', generatedHTML);
+      //generate HTML based on template
+      const generatedHTML = templates.cartProduct(menuProduct);
 
+      //create element DOM using utils.createElementFromHTML
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      console.log('cart generatedDOM', generatedDOM);
 
-
+      //add elemnt to menu
       thisCart.dom.productList.appendChild(generatedDOM);
-
-
-
-      console.log('adding product', menuProduct);
-
-      return generatedHTML;
 
     }
   }

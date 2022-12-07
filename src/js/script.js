@@ -529,10 +529,21 @@
       });
 
       thisCartProduct.dom.wrapper.dispatchEvent(event);
+      console.log('remove', thisCartProduct);
     }
 
     initActions() {
-      
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function (event) {
+        event.preventDefault();
+
+      });
+
+      thisCartProduct.dom.remove.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisCartProduct.remove();
+      });
     }
   }
 

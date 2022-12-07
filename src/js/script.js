@@ -98,9 +98,6 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
-
-
-      // console.log('new Product:', thisProduct);
     }
 
     renderInMenu() {
@@ -108,7 +105,6 @@
 
       // generate HTML Based on template
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      // console.log('generatedHTML:', generatedHTML);
 
       // create element using untils.createElementFromHTML
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -138,7 +134,6 @@
 
       // /* find the clickable trigger (the element that should react to clicking) */
       // const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      // console.log('clickableTrigger', clickableTrigger);
 
       /* START: add event listener to clickable trigger on event click */
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
@@ -148,7 +143,6 @@
 
         /* find active product (product that has active class) */
         const activeProduct = document.querySelector(select.all.menuProductsActive);
-        // console.log('activeProduct', activeProduct);
 
         /* if there is active product and it's not thisProduct.element, remove class active from it */
         if (activeProduct !== null && activeProduct != thisProduct.element) {
@@ -164,7 +158,6 @@
 
     initOrderForm() {
       const thisProduct = this;
-      // console.log('initOrderForm', thisProduct);
 
       thisProduct.form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -187,11 +180,9 @@
 
     processOrder() {
       const thisProduct = this;
-      // console.log('processOrder', thisProduct);
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      // console.log('formData', formData);
 
       // set price to default price
       let price = thisProduct.data.price;
@@ -200,18 +191,15 @@
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        // console.log('paramId', paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          // console.log('optionId', optionId, option);
 
           //whether the formData object contains a property with the same key as the parameter key, and
           //whether there is an option key in the array stored under this key (the (includes) method mentioned earlier).
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          // console.log('optionSelected', optionSelected);
 
           if (optionSelected) {
 
@@ -229,7 +217,6 @@
           }
 
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-          // console.log('optionImage', optionImage);
 
           if (optionImage) {
             if (optionSelected) {
@@ -276,7 +263,6 @@
       const productSummary = {
         params: {},
       };
-      console.log('productSummary', productSummary);
 
 
       productSummary.id = thisProduct.id;
@@ -295,7 +281,6 @@
 
       const formData = utils.serializeFormToObject(thisProduct.form);
       const params = {};
-      console.log('thisparams', params);
 
       // for every category (param)...
       for (let paramId in thisProduct.data.params) {
@@ -312,7 +297,6 @@
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          // console.log('optionSelected', optionSelected);
 
           if (optionSelected) {
             params[paramId].options[optionId] = option.label;
@@ -328,9 +312,6 @@
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
-
-      console.log('amountWidget:', thisWidget);
-      console.log('constructor arguments:', element);
 
       thisWidget.getElements(element);
       thisWidget.setValue(settings.amountWidget.defaultValue);
@@ -400,11 +381,10 @@
     constructor(element) {
       const thisCart = this;
 
-      thisCart.product = [];
+      thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
 
-      console.log('new Cart', thisCart);
     }
 
     getElements(element) {
@@ -425,7 +405,6 @@
         event.preventDefault();
 
         const activeCart = document.querySelector(select.containerOf.cart);
-        console.log(activeCart);
 
         activeCart.classList.toggle(classNames.cart.wrapperActive);
 
@@ -446,13 +425,57 @@
       //add elemnt to menu
       thisCart.dom.productList.appendChild(generatedDOM);
 
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+
+    }
+  }
+
+  class CartProduct {
+    constructor(menuProduct, element) {
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.price = menuProduct.price;
+
+
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
+
+    }
+
+    getElements(element) {
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+
+      thisCartProduct.dom.wrapper = element;
+
+      thisCartProduct.dom.amountWidget = document.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = document.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = document.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = document.querySelector(select.cartProduct.remove);
+    }
+
+    initAmountWidget() {
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+
+
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });
     }
   }
 
   const app = {
     initMenu: function () {
       const thisApp = this;
-      console.log('thisAppData:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);

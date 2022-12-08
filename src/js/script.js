@@ -476,18 +476,25 @@
       }
     }
 
-    remove() {
+    // remove(event){
+    //   const thisCart = this;
+      
+    //   event.dom.wrapper.remove();
+
+    //   const removeProduct = thisCart.products.indexOf(event);
+    //   thisCart.products.splice(removeProduct, 1);
+    //   thisCart.update();
+    // }
+
+    remove(event) {
       const thisCart = this;
 
-      const event = new CustomEvent('remove', {
-        bubbles: true,
-        detail: {
-          cartProduct: thisCart,
-        },
-      });
+      event.dom.wrapper.remove();
+      const removeProduct = thisCart.products.indexOf(event);
+      console.log('removeProduct:', removeProduct);
 
-      thisCart.dom.wrapper.dispatchEvent(event);
-      console.log('remove', thisCart);
+      thisCart.products.splice(removeProduct, 1);
+
 
       thisCart.update();
     }

@@ -404,7 +404,7 @@
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
-      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+      thisCart.dom.deliveryFee = document.querySelector(select.cart.deliveryFee);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
@@ -460,10 +460,11 @@
     update() {
       const thisCart = this;
 
-      const deliveryFee = settings.cart.defaultDeliveryFee;
-      console.log('deliveryFee', deliveryFee);
+      thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
+      console.log('deliveryFee', thisCart.deliveryFee);
 
       thisCart.totalNumber = 0;
+      console.log('thisCart.totalNumber', thisCart.totalNumber);
       thisCart.subtotalPrice = 0;
 
       for (let product of thisCart.products) {
@@ -472,7 +473,7 @@
       }
 
       if (thisCart.totalNumber != 0) {
-        thisCart.totalPrice = thisCart.subtotalPrice + deliveryFee;
+        thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
       } else {
         thisCart.totalPrice = 0;
       }
@@ -481,11 +482,13 @@
 
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
-      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
 
       for (let price of thisCart.dom.totalPrice) {
         price.innerHTML = thisCart.totalPrice;
       }
+      console.log('thisCart.totalNumber', thisCart.totalNumber);
+      console.log('thisCart.subtotalPrice', thisCart.subtotalPrice);
     }
 
     // remove(event){
@@ -502,10 +505,10 @@
       const thisCart = this;
 
       event.dom.wrapper.remove();
-      const removeProduct = thisCart.products.indexOf(event);
-      console.log('removeProduct:', removeProduct);
+      thisCart.removeProduct = thisCart.products.indexOf(event);
+      console.log('removeProduct:', thisCart.removeProduct);
 
-      thisCart.products.splice(removeProduct, 1);
+      thisCart.products.splice(thisCart.removeProduct, 1);
 
 
       thisCart.update();
@@ -513,10 +516,20 @@
 
     sendOrder() {
       const thisCart = this;
+      console.log('sendOrder thisCart', thisCart);
 
       const url = settings.db.url + '/' + settings.db.orders;
+      console.log('sendOrder url', url);
 
       const payload = {};
+
+      payload.address = thisCart.dom.address.value;
+      payload.phone = thisCart.dom.phone.value;
+      payload.totalPrice = thisCart.totalPrice;
+      payload.subtotalPrice = thisCart.subtotalPrice;
+      payload.totalNumber = thisCart.totalNumber;
+      payload.deliveryFee = thisCart.deliveryFee;
+      payload.products = {};
 
       console.log('payload', payload);
     }
@@ -538,6 +551,8 @@
       thisCartProduct.initAmountWidget();
       thisCartProduct.initActions();
 
+      console.log('thisCartProduct', thisCartProduct);
+
     }
 
     getElements(element) {
@@ -547,10 +562,10 @@
 
       thisCartProduct.dom.wrapper = element;
 
-      thisCartProduct.dom.amountWidget = document.querySelector(select.cartProduct.amountWidget);
-      thisCartProduct.dom.price = document.querySelector(select.cartProduct.price);
-      thisCartProduct.dom.edit = document.querySelector(select.cartProduct.edit);
-      thisCartProduct.dom.remove = document.querySelector(select.cartProduct.remove);
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
     }
 
     initAmountWidget() {

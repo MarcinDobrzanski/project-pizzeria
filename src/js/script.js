@@ -608,6 +608,21 @@
         thisCartProduct.remove();
       });
     }
+
+    getData() {
+      const thisCartProduct = this;
+      console.log('thisCartProduct', thisCartProduct);
+
+      const cartSummary = {};
+
+      cartSummary.id = thisCartProduct.id;
+      cartSummary.name = thisCartProduct.data.name;
+      cartSummary.amount = thisCartProduct.amountWidget.value;
+      cartSummary.priceSingle = thisCartProduct.priceSingle;
+      cartSummary.price = thisCartProduct.price;
+
+      return cartSummary;
+    }
   }
 
   const app = {

@@ -408,7 +408,9 @@
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
-
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
     }
 
     initActions() {
@@ -429,6 +431,11 @@
 
       thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
+      });
+
+      thisCart.dom.form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -483,7 +490,7 @@
 
     // remove(event){
     //   const thisCart = this;
-      
+
     //   event.dom.wrapper.remove();
 
     //   const removeProduct = thisCart.products.indexOf(event);
@@ -502,6 +509,16 @@
 
 
       thisCart.update();
+    }
+
+    sendOrder() {
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.orders;
+
+      const payload = {};
+
+      console.log('payload', payload);
     }
 
   }
@@ -596,15 +613,15 @@
       const url = settings.db.url + '/' + settings.db.products;
 
       fetch(url)
-      .then(function(rawResponse) {
-        return rawResponse.json();
-      })
-      .then(function(parsedResponse) {
-        console.log('parsedResponse', parsedResponse);
-        thisApp.data.products = parsedResponse;
-        thisApp.initMenu();
+        .then(function (rawResponse) {
+          return rawResponse.json();
+        })
+        .then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+          thisApp.data.products = parsedResponse;
+          thisApp.initMenu();
 
-      });
+        });
       console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 

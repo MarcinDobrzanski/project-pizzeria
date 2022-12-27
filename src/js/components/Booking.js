@@ -36,6 +36,8 @@ class Booking {
       ],
     };
 
+    console.log('params', params);
+
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking.join('&'),
       eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent.join('&'),
@@ -62,7 +64,38 @@ class Booking {
         console.log(bookings);
         console.log(eventsCurrent);
         console.log(eventsRepeat);
+        thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
+  }
+
+  parseData(bookings, eventsCurrent, eventsRepeat) {
+    const thisBooking = this;
+
+    thisBooking.booked = {};
+
+    for (let item of eventsCurrent) {
+      thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+    }
+
+    console.log('thisBooking.booked', thisBooking.booked);
+  }
+
+  makeBooked(date, hour, duration, table) {
+    const thisBooking = this;
+
+    if (typeof thisBooking.booked[date] == 'undefined') {
+      thisBooking.booked[date] = {};
+    }
+
+    const startHour = utils.hourToNumber(hour);
+
+    if (typeof thisBooking.booked[date][startHour] == 'undefined') {
+      thisBooking.booked[date][startHour] = [];
+    }
+
+    console.log('thisBooking.booked', thisBooking.booked);
+
+    thisBooking.booked[date][startHour].push(table);
   }
 
   render(element) {

@@ -275,7 +275,10 @@ class Booking {
 
     fetch(url, options);
 
+    thisBooking.booked[payload.date][thisBooking.hour].push(payload.table);
+
     console.log('payload booking', payload);
+    console.log('thisBooking.booked', thisBooking.booked);
   }
 }
 

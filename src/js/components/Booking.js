@@ -139,10 +139,10 @@ class Booking {
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked, classNames.booking.reservation);
-        const removeRes = thisBooking.reservationTables.indexOf(table.attributes[1].value);
-        // console.log('removeReservation', removeRes);
+        const removeReservation = thisBooking.reservationTables.indexOf(tableId);
+        // console.log('removeReservation', removeReservation);
         // console.log('reservationTables', thisBooking.reservationTables);
-        thisBooking.reservationTables.splice(removeRes, 1);
+        thisBooking.reservationTables.splice(removeReservation, 1);
 
       }
     }
@@ -166,10 +166,18 @@ class Booking {
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
+    thisBooking.dom.hourReservation = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.output);
 
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
-
     thisBooking.dom.reservationTable = thisBooking.dom.wrapper.querySelector(select.booking.reservationTable);
+    thisBooking.dom.input = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.input);
+    thisBooking.dom.submitBooking = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.durationReservation = thisBooking.dom.wrapper.querySelector(select.booking.hours);
+    thisBooking.dom.peopleReservation = thisBooking.dom.wrapper.querySelector(select.booking.people);
+    thisBooking.dom.startersReservation = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+
 
   }
 
@@ -197,12 +205,14 @@ class Booking {
   initTables(event) {
     const thisBooking = this;
 
+
+    const removeReservation = thisBooking.reservationTables.indexOf(event.target.value);
+
     if (event.target.classList.contains('table') && event.target.classList.contains('booked')) {
       alert('Stolik jest zajęty!');
 
     } else if (event.target.classList.contains('table') && event.target.classList.contains(classNames.booking.reservation)) {
       event.target.classList.remove(classNames.booking.reservation);
-      const removeReservation = thisBooking.reservationTables.indexOf(event.target.value);
       thisBooking.reservationTables.splice(removeReservation, 1);
 
     } else if (event.target.classList.contains('table') && event.target.classList.contains('table')) {
@@ -210,7 +220,6 @@ class Booking {
       for (let table of thisBooking.dom.tables) {
         if (table.classList.contains(classNames.booking.reservation)) {
           table.classList.remove(classNames.booking.reservation);
-          const removeReservation = thisBooking.reservationTables.indexOf(event.target.value);
           thisBooking.reservationTables.splice(removeReservation, 1);
         }
       }
@@ -220,9 +229,53 @@ class Booking {
       thisBooking.reservationTables.push(event.target.attributes[1].value);
     }
 
+    thisBooking.dom.submitBooking.addEventListener('submit', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+
+
 
     console.log('thisBooking.reservationTables', thisBooking.reservationTables);
 
+  }
+
+  sendBooking() {
+    const thisBooking = this;
+    console.log('sendBooking thisBooking', thisBooking);
+
+    const url = settings.db.url + '/' + settings.db.booking;
+    console.log('sendBooking url', url);
+
+    const payload = {
+      starters: [],
+    };
+
+    payload.date = thisBooking.date;
+    payload.hour = thisBooking.dom.hourReservation.innerText;
+    payload.table = parseInt(thisBooking.reservationTables[0]);
+    payload.duration = parseInt(thisBooking.dom.durationReservation.value);
+    payload.ppl = parseInt(thisBooking.dom.peopleReservation.value);
+    payload.phone = thisBooking.dom.phone.value;
+    payload.address = thisBooking.dom.address.value;
+
+    for (let starter of thisBooking.dom.startersReservation) {
+      if (starter.checked) {
+        payload.starters.push(starter.value);
+      }
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options);
+
+    console.log('payload booking', payload);
   }
 }
 

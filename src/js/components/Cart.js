@@ -92,6 +92,7 @@ class Cart {
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
     } else {
       thisCart.totalPrice = 0;
+      thisCart.deliveryFee = 0;
     }
 
 

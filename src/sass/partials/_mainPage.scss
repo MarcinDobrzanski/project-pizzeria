@@ -9,22 +9,22 @@
 .home-main-banner {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   .booked-img {
     .picture-banner {
       object-fit: cover;
       max-height: 120px;
-      width: 300px;
+      width: 298px;
     }
 
-    .left-img {
-      padding-right: 4px;
-    }
+    // .left-img {
+    //   padding-right: 4px;
+    // }
     
-    .right-img {
-      padding-left: 4px;
-    }
+    // .right-img {
+    //   padding-left: 4px;
+    // }
   }
 }
 
@@ -35,8 +35,6 @@
   justify-content: center;
   background-color: $color-main;
   color: $color-light;
-  padding-left: 0;
-  margin-left: 0;
   width: 600px;
   max-height: 120px;
   text-transform: uppercase;

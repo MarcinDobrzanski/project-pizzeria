@@ -88,12 +88,11 @@ class Cart {
       thisCart.subtotalPrice += product.price;
     }
 
-    if (thisCart.totalNumber != 0) {
-      thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-    } else {
-      thisCart.totalPrice = 0;
+    if (thisCart.totalNumber == 0) {
       thisCart.deliveryFee = 0;
     }
+
+    thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
 
 
     thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;

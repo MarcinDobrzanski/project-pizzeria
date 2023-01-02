@@ -21,6 +21,7 @@
     .left-img {
       padding-right: 4px;
     }
+    
     .right-img {
       padding-left: 4px;
     }
@@ -47,6 +48,22 @@
   p {
     margin-top: 0;
   }
+}
+
+.gallery-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+
+  img {
+    height: 196px;
+    width: 196px;
+    object-fit: cover;
+  }
+}
+
+.slider-mainPage {
+  padding: 40px 0 60px 0;
 }
 
 .product {

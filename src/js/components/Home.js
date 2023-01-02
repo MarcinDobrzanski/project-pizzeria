@@ -15,9 +15,9 @@ class Home {
     thisHome.dom.wrapper = homePage;
 
     const generatedHTML = templates.mainPage();
-    console.log({generatedHTML});
+    // console.log({generatedHTML});
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-    console.log({generatedDOM});
+    // console.log({generatedDOM});
 
     thisHome.dom.wrapper.appendChild(generatedDOM);
   }

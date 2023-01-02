@@ -52,6 +52,7 @@ export const select = {
     hours: '[name="hours"]',
     people: '[name="people"]',
     starters: 'input[name="starter"]',
+    submit: '.order-confirmation button'
   },
   nav: {
     links: '.main-nav a',

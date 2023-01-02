@@ -167,17 +167,17 @@ class Booking {
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.hourReservation = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.output);
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
 
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.reservationTable = thisBooking.dom.wrapper.querySelector(select.booking.reservationTable);
     thisBooking.dom.input = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.input);
-    thisBooking.dom.submitBooking = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    thisBooking.dom.submitBooking = thisBooking.dom.wrapper.querySelector(select.booking.submit);
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
     thisBooking.dom.durationReservation = thisBooking.dom.wrapper.querySelector(select.booking.hours);
     thisBooking.dom.peopleReservation = thisBooking.dom.wrapper.querySelector(select.booking.people);
     thisBooking.dom.startersReservation = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
-
 
   }
 
@@ -191,7 +191,7 @@ class Booking {
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener('updated', function () {
+    thisBooking.dom.form.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
 
@@ -199,6 +199,11 @@ class Booking {
     thisBooking.dom.reservationTable.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.initTables(event);
+    });
+
+    thisBooking.dom.submitBooking.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
     });
   }
 
@@ -229,13 +234,6 @@ class Booking {
       thisBooking.reservationTables.push(event.target.attributes[1].value);
     }
 
-    thisBooking.dom.submitBooking.addEventListener('submit', function (event) {
-      event.preventDefault();
-      thisBooking.sendBooking();
-    });
-
-
-
     console.log('thisBooking.reservationTables', thisBooking.reservationTables);
 
   }
@@ -245,7 +243,6 @@ class Booking {
     console.log('sendBooking thisBooking', thisBooking);
 
     const url = settings.db.url + '/' + settings.db.booking;
-    console.log('sendBooking url', url);
 
     const payload = {
       starters: [],

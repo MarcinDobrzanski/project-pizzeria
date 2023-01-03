@@ -12,20 +12,58 @@
   justify-content: space-between;
 
   .booked-img {
+    position: relative;
+    overflow: hidden;
+
     .picture-banner {
       object-fit: cover;
       max-height: 120px;
       width: 298px;
     }
 
-    // .left-img {
-    //   padding-right: 4px;
-    // }
-    
-    // .right-img {
-    //   padding-left: 4px;
-    // }
+    .image-header {
+      font-size: 1.4em;
+      font-weight: bold;
+      position: absolute;
+      color: white;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: 0.5s;
+    }
+
+    .image-text {
+      font-size: 0.9em;
+      font-weight: 300;
+      position: absolute;
+      color: white;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: 0.5s;
+    }
   }
+
+  .booked-img:hover {
+
+    .image-header {
+      top: 20%;
+      transition: 0.5s;
+    }
+
+    .image-text {
+      top: 50%;
+      transition: 0.5s;
+    }
+  }
+
+  // .left-img {
+  //   padding-right: 4px;
+  // }
+
+  // .right-img {
+  //   padding-left: 4px;
+  // }
 }
 
 .open-time {
@@ -65,7 +103,6 @@
 }
 
 .instagram-link {
-
   padding-top: 20px;
 
   a {

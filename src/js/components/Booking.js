@@ -272,7 +272,12 @@ class Booking {
 
     fetch(url, options);
 
-    thisBooking.booked[payload.date][thisBooking.hour].push(payload.table);
+    const startHour = utils.hourToNumber(payload.hour);
+
+    for (let hourBlock = startHour; hourBlock < startHour + payload.duration; hourBlock += 0.5) {
+
+      thisBooking.booked[payload.date][hourBlock].push(payload.table);
+    }
 
     console.log('payload booking', payload);
     console.log('thisBooking.booked', thisBooking.booked);

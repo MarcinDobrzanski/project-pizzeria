@@ -45,7 +45,6 @@
   }
 
   .booked-img:hover {
-
     .image-header {
       top: 20%;
       transition: 0.5s;
@@ -56,14 +55,6 @@
       transition: 0.5s;
     }
   }
-
-  // .left-img {
-  //   padding-right: 4px;
-  // }
-
-  // .right-img {
-  //   padding-left: 4px;
-  // }
 }
 
 .open-time {
@@ -91,10 +82,52 @@
   justify-content: space-between;
   padding: 4px 0;
 
-  img {
-    height: 196px;
-    width: 196px;
-    object-fit: cover;
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+
+    img {
+      height: 196px;
+      width: 196px;
+      object-fit: cover;
+    }
+
+    .item-icon {
+      position: absolute;
+      color: $color-main;
+      opacity: 0.4;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -5;
+    }
+  }
+
+  .gallery-item:hover {
+    .item-efect {
+      position: absolute;
+      content: '';
+      height: 200px;
+      width: 200px;
+      background-color: $color-light;
+      opacity: 0.2;
+      top: 49%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .item-icon {
+      font-size: 1.2em;
+      opacity: 8;
+      z-index: 5;
+      transition: .8s;
+
+      .fa-heart {
+        padding-right: 5px;
+        color: $color-danger;
+        opacity: 1;
+      }
+      
+    }
   }
 }
 

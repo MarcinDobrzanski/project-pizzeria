@@ -11,15 +11,19 @@
   align-items: left;
 
   h2 {
-    margin: 2em 2em 2em 2em;
+    padding: 1em 1em 0 2em;
     max-width: 50em;
     color: black;
   }
-  
+
   p {
-    margin: 2em 2em 2em 2em;
+    padding: 0 1em;
     max-width: 50em;
     color: black;
+  }
+
+  p:last-child {
+    font-style: italic;
   }
 }
 

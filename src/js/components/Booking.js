@@ -279,6 +279,17 @@ class Booking {
       thisBooking.booked[payload.date][hourBlock].push(payload.table);
     }
 
+    for (let table of thisBooking.dom.tables) {
+      if (table.classList.contains(classNames.booking.reservation)) {
+        table.classList.remove(classNames.booking.reservation);
+        table.classList.add(classNames.booking.tableBooked);
+      }
+    }
+
+
+
+    // thisBooking.dom.tables[0].classList.toggle(classNames.booking.reservation, classNames.booking.tableBooked);
+
     console.log('payload booking', payload);
     console.log('thisBooking.booked', thisBooking.booked);
   }

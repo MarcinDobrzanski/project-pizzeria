@@ -38,7 +38,7 @@ class Booking {
       ],
     };
 
-    console.log('params', params);
+    // console.log('params', params);
 
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking.join('&'),
@@ -63,9 +63,9 @@ class Booking {
         ]);
       })
       .then(function ([bookings, eventsCurrent, eventsRepeat]) {
-        console.log('bookings', bookings);
-        console.log('eventsCurrent', eventsCurrent);
-        console.log('eventsRepeat', eventsRepeat);
+        // console.log('bookings', bookings);
+        // console.log('eventsCurrent', eventsCurrent);
+        // console.log('eventsRepeat', eventsRepeat);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
   }
@@ -93,7 +93,7 @@ class Booking {
       }
     }
 
-    console.log('thisBooking.booked', thisBooking.booked);
+    // console.log('thisBooking.booked', thisBooking.booked);
 
     thisBooking.updateDOM();
   }
@@ -160,7 +160,6 @@ class Booking {
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
     thisBooking.dom.wrapper.appendChild(generatedDOM);
-    // thisBooking.dom.wrapper.innerHTML = generatedHTML;
 
     thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
@@ -234,13 +233,13 @@ class Booking {
       thisBooking.reservationTables.push(event.target.attributes[1].value);
     }
 
-    console.log('thisBooking.reservationTables', thisBooking.reservationTables);
+    // console.log('thisBooking.reservationTables', thisBooking.reservationTables);
 
   }
 
   sendBooking() {
     const thisBooking = this;
-    console.log('sendBooking thisBooking', thisBooking);
+    // console.log('sendBooking thisBooking', thisBooking);
 
     const url = settings.db.url + '/' + settings.db.booking;
 
@@ -286,12 +285,8 @@ class Booking {
       }
     }
 
-
-
-    // thisBooking.dom.tables[0].classList.toggle(classNames.booking.reservation, classNames.booking.tableBooked);
-
-    console.log('payload booking', payload);
-    console.log('thisBooking.booked', thisBooking.booked);
+    // console.log('payload booking', payload);
+    // console.log('thisBooking.booked', thisBooking.booked);
   }
 }
 

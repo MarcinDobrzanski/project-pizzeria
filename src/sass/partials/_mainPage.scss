@@ -94,12 +94,10 @@
 
     .item-icon {
       position: absolute;
-      color: $color-main;
-      opacity: 0.4;
+      color: $color-light;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: -5;
     }
   }
 
@@ -118,14 +116,13 @@
     
     .item-icon {
       font-size: 1.2em;
+      color: $color-main;
       opacity: 8;
       z-index: 5;
       transition: .8s;
 
       .fa-heart {
         padding-right: 5px;
-        color: $color-danger;
-        opacity: 1;
       }
       
     }

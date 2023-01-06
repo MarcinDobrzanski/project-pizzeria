@@ -57,6 +57,11 @@ export const select = {
   nav: {
     links: '.main-nav a',
   },
+  banner: {
+    links: '.booked-img a .picture-banner',
+    bannerWrapper: '.home-main-banner',
+    bannerOrder: 'click-banner',
+  },
 
   // CODE ADDED START
   cart: {

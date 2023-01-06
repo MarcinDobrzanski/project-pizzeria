@@ -48,11 +48,6 @@ const app = {
     const thisApp = this;
 
     for (let page of thisApp.pages) {
-      // if(page.id == pageId) {
-      //   page.classList.add(classNames.pages.active);
-      // } else {
-      //   page.classList.remove(classNames.pages.active);
-      // }
       page.classList.toggle(classNames.pages.active, page.id == pageId);
     }
     for (let link of thisApp.navLinks) {
@@ -64,7 +59,6 @@ const app = {
     const thisApp = this;
 
     for (let productData in thisApp.data.products) {
-      // new Product(productData, thisApp.data.products[productData]);
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
